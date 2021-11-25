@@ -50,7 +50,7 @@ int main()
 		cin >> x;
 		cout << "Введите число E: ";
 		cin >> E;
-		if (x >= 0 && x < 1)
+		if (x >= 0 && x < 1 && E>=0)
 		{
 			summ = chpr2(E, x, count);
 
@@ -62,7 +62,7 @@ int main()
 			cout << "Число слагаемых: " << count << endl;
 		}
 		else
-			cout << "X должен быть не больше одного" << endl;
+			cout << "Некорректно введены данные" << endl;
 		cout << "\nВыполнить ещё раз - 1: ";
 		cin >> v;
 	} while (v == 1);
