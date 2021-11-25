@@ -1,0 +1,113 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+double chpr(double,  double, double&);
+double  chpr2(double, double, double&);
+
+int main()
+{
+	setlocale(LC_ALL, "rus");
+
+	double n;
+	double x;
+	double ti;
+	double chas = 1;
+	double temp;
+	double last;
+	double summ=0;
+	double E;
+	double count = 0;
+	int v;
+	do {
+		cout << "\n ЗАДАНИЕ 1" << endl;
+		cout << "Введите значение функции: ";
+		cin >> x;
+		cout << "Введите число слагаемых: ";
+		cin >> n;
+
+		if (x >= 0 && x < 1)
+		{
+			ti = 1 / ((1 + x) * (1 + x) * (1 + x)); // Вычисляется абсолютная велечина заданной функции 
+			cout << "Абсолютная велечина: " << ti << endl;
+			chas = chpr(n, x, last);
+			cout << "Частичная сумма: " << chas << endl;
+			cout << "Абсолютная погрешность: " << abs(ti - chas) << endl;
+			if (abs(last) > abs(ti - chas))
+			{
+				cout << "Абсолютная погрешность меньше абсолютной велечины последнего слагаемого " << endl;
+
+			}
+			else
+				cout << "Абсолютная погрешность больше абсолютной велечины последнего слагаемого " << endl;
+		}
+		else
+			cout << "X должен быть не больше одного" << endl;
+
+		cout << "\n ЗАДАНИЕ 2" << endl;
+		cout << "Введите значение функции: ";
+		cin >> x;
+		cout << "Введите число E: ";
+		cin >> E;
+		if (x >= 0 && x < 1)
+		{
+			summ = chpr2(E, x, count);
+
+			cout << "Сумма слагаемых, больших Е: " << summ << endl;
+			cout << "Число слагаемых: " << count << endl;
+			count = 0;
+			summ = chpr2((E / 10), x, count);
+			cout << "Сумма слагаемых, больших Е/10: " << summ << endl;
+			cout << "Число слагаемых: " << count << endl;
+		}
+		else
+			cout << "X должен быть не больше одного" << endl;
+		cout << "\nВыполнить ещё раз - 1: ";
+		cin >> v;
+	} while (v == 1);
+
+}
+
+double  chpr(double N,  double x, double& last)
+{
+	
+	double n = 2;
+	double n1 = 3;
+	double temp = x;
+	double chas = 1;
+
+	for (int i = 0; i < N - 1; i++)
+	{
+		chas += ((n * n1 *x* pow(-1,(i+1)) / 2)); // Алгоритм для вычисления последовательности, -1 используется для смены знака, temp для постепенного возведения х в степень
+		n++; n1++;  x *= temp;
+	}
+	n--; n1--; x = x / temp;
+	last = ((n * n1 * x * pow(-1, (N-1)) / 2)); // Вычисление последнего элемента 
+
+	return chas;
+}
+
+double  chpr2(double E, double x, double& count)
+{
+
+	double n = 2;
+	double n1 = 3;
+	double k = 1;
+	double val = 1;
+	double summ=0;
+	double temp = x;
+	
+	
+		while (abs(val) > E)
+		{
+			summ += val;
+			val = ((n * n1 * x * pow((-1), k)) / 2); 
+			n++; n1++; k++; x *= temp;
+
+			count++;
+		}
+
+		return summ;
+
+}
